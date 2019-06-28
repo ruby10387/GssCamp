@@ -54,6 +54,7 @@ $(function(){
             { command: { text: "刪除", click: deleteBook }, title: " ", width: "120px" }
         ]               
     });
+    //燈箱kendoWindow
     $("#open_window").click(function() {
         $("#window").kendoWindow({
             width: "500px",
@@ -61,9 +62,11 @@ $(function(){
             actions: ["Pin", "Minimize", "Maximize", "Close"]            
         }).data("kendoWindow").center().open();
     });
+    //新增書籍
     $("#add_book").click(function() {
         addBook();
     });
+    //搜尋
     $(".book-grid-search").on("input propertychange",function () {
         $("#book_grid").data("kendoGrid").dataSource.filter({
             filters: [
@@ -76,7 +79,7 @@ $(function(){
         });
     });    
 })
-
+//讀取資料
 function loadBookData(){
     bookDataFromLocalStorage = JSON.parse(localStorage.getItem("bookData"));
     if(bookDataFromLocalStorage == null){
@@ -84,11 +87,11 @@ function loadBookData(){
         localStorage.setItem("bookData",JSON.stringify(bookDataFromLocalStorage));
     }
 }
-
+//切換圖片
 function onChange(){
     $(".book-image").attr("src",$("#book_category").data("kendoDropDownList").value());
 }
-  
+//刪除  
 function deleteBook(e){
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     for(i=0;i<bookDataFromLocalStorage.length;i++) {
@@ -100,7 +103,7 @@ function deleteBook(e){
     localStorage.setItem("bookData",JSON.stringify(bookDataFromLocalStorage));
     $("#book_grid").data("kendoGrid").dataSource.data(bookDataFromLocalStorage);
 }
-
+//新增
 function addBook(){
     const newBook = {
         "BookId": bookDataFromLocalStorage[bookDataFromLocalStorage.length-1].BookId+1,
